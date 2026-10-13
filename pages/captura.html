@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SIDII - Captura MIR & Gestión Institucional</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <!-- Metadatos y PWA -->
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#7a0c16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Dependencias Visuales y Estilos -->
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-[#f8f9fa] text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row">
+
+  <!-- ========================================================
+       SIDEBAR ESCRITORIO (Visible en pantallas grandes lg: >= 1024px)
+       ======================================================== -->
+  <aside class="hidden lg:flex lg:w-64 bg-[#7a0c16] text-white flex-col justify-between shrink-0 h-screen sticky top-0 p-5 shadow-xl">
+    <div>
+      <!-- Brand -->
+      <div class="flex items-center gap-3 pb-6 border-b border-white/15">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg font-bold">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-wide">SIDII PWA</h1>
+          <p class="text-xs text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+
+      <!-- Navegación -->
+      <nav class="mt-6 flex flex-col gap-1.5">
+        <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-house"></i> <span>Inicio</span>
+        </a>
+        <a href="captura.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/20 text-white font-medium shadow-sm transition">
+          <i class="fa-solid fa-pen-to-square"></i> <span>Captura MIR</span>
+        </a>
+        <a href="evidencias.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-folder-open"></i> <span>Evidencias</span>
+        </a>
+        <a href="graficas.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-chart-simple"></i> <span>Gráficas</span>
+        </a>
+        <a href="gestion.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-shield-halved"></i> <span>Gestión</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Perfil Administrador -->
+    <div class="pt-4 border-t border-white/15 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm">LR</div>
+      <div class="overflow-hidden">
+        <p class="text-sm font-semibold truncate">Liliana R.</p>
+        <p class="text-xs text-rose-200 truncate">Planeación Institucional</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================
+       CONTENEDOR PRINCIPAL
+       ======================================================== -->
+  <main class="flex-1 flex flex-col min-w-0 pb-24 lg:pb-10">
+
+    <!-- Topbar Móvil -->
+    <header class="lg:hidden bg-[#7a0c16] text-white px-5 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-sm tracking-wider">SIDII</span>
+            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 font-semibold px-1.5 py-0.5 rounded-full">● PWA</span>
+          </div>
+          <p class="text-[9px] text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <button class="relative p-1.5 text-white/90 hover:text-white">
+          <i class="fa-regular fa-bell"></i>
+          <span class="w-2 h-2 rounded-full bg-rose-400 absolute top-1 right-1"></span>
+        </button>
+        <div class="w-7 h-7 rounded-full bg-white text-[#7a0c16] font-bold text-xs flex items-center justify-center shadow">
+          LR
+        </div>
+      </div>
+    </header>
+
+    <!-- Barra de Estado de Conexión a Base de Datos / Backend -->
+    <div class="px-4 lg:px-8 pt-3">
+      <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-xs">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <div>
+            <span class="font-semibold text-slate-800">Conectado a Base de Datos (REST API)</span>
+            <span class="hidden sm:inline text-slate-400 ml-1.5">• PostgreSQL v16 • Sincronización activa</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg font-medium text-[11px]" id="cola-badge">
+          <i class="fa-solid fa-box-archive text-amber-600"></i>
+          <span>1 en cola</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenedor del Formulario -->
+    <div class="px-4 lg:px-8 py-4 max-w-4xl mx-auto w-full space-y-5">
+
+      <!-- Encabezado de Captura -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm flex items-start justify-between">
+        <div>
+          <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wider">PLANEACIÓN INSTITUCIONAL • EJERCICIO 2026</span>
+          <h2 class="text-xl sm:text-2xl font-bold font-serif text-slate-900 mt-1">Captura de Matriz de Indicadores (MIR)</h2>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Registro normativo de metas programadas frente a valor real cuatrimestral. Validación continua para auditorías y memoria de cuenta pública universitaria.
+          </p>
+        </div>
+        <button class="w-10 h-10 rounded-xl bg-rose-50 text-rose-800 hover:bg-rose-100 flex items-center justify-center shrink-0 ml-3 transition">
+          <i class="fa-solid fa-clipboard-list text-base"></i>
+        </button>
+      </div>
+
+      <!-- FORMULARIO PRINCIPAL -->
+      <form id="form-mir" class="space-y-5" onsubmit="event.preventDefault();">
+        
+
+        <!-- Sección 1: Jerarquía y Unidad Responsable -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-sitemap text-rose-800"></i> 1. Jerarquía y Unidad Responsable
+          </h3>                                                           
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nivel de la MIR</label>
+              <select id="mir-nivel" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-[#7a0c16]/30 outline-none">
+                <option value="Propósito">Propósito • Impacto directo en la comunidad</option>
+<option value="Fin">Fin • Contribución a objetivos de desarrollo</option>
+<option value="Componente">Componente • Bienes y servicios entregados</option>
+<option value="Actividad">Actividad • Acciones clave presupuestadas</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Programa Presupuestario (PP)</label>
+              <select id="mir-pp" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-[#7a0c16]/30 outline-none">
+                <option value="E010">E010 - Prestación de Servicios de Educación</option>
+                <option value="K027">K027 - Mantenimiento de Infraestructura</option>
+                <option value="U006">U006 - Subsidios Federales</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Unidad Responsable (UR)</label>
+            <input type="text" id="mir-ur" value="UR-320 Secretaría General Académica" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-slate-700 outline-none" readonly />
+          </div>
+        </div>
+
+        <!-- Sección 2: Indicador y Resumen Narrativo -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-square-poll-vertical text-rose-800"></i> 2. Indicador y Resumen Narrativo
+          </h3>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre del Indicador Institucional</label>
+            <input type="text" id="mir-indicador" value="Tasa de Eficiencia Terminal en Programas Acreditados" placeholder="Ej. Porcentaje de egresados titulados..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Resumen Narrativo (Objetivo Estratégico)</label>
+            <textarea id="mir-resumen" rows="3" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30">Los estudiantes de licenciatura concluyen sus estudios dentro del periodo reglamentario con acreditación de competencias clave conforme a los estándares CIEES.</textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Método de Cálculo / Algoritmo</label>
+            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl p-2.5">
+              <span class="w-6 h-6 rounded bg-rose-100 text-rose-800 text-xs font-bold flex items-center justify-center shrink-0">Σ</span>
+              <input type="text" id="mir-metodo" value="(Total de Egresados Titulados / Cohorte de Ingreso Inicial) * 100" class="w-full text-xs bg-transparent outline-none text-slate-700 font-mono" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 3: Metas Cuatrimestrales (C1, C2, C3) -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+              <i class="fa-solid fa-calendar-days text-rose-800"></i> 3. Metas Cuatrimestrales
+            </h3>
+            <span class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">AÑO FISCAL 2026</span>
+          </div>
+
+          <!-- Cuatrimestre 1 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-[#7a0c16] text-white text-[11px] font-bold flex items-center justify-center">1</span>
+                <span class="text-xs font-bold text-slate-800">Enero - Abril (C1)</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-800">100.0% Cumplido</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Programado</label>
+                <input type="number" id="c1-prog" value="250" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Real Obtenido</label>
+                <input type="number" id="c1-real" value="250" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Cuatrimestre 2 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-[#7a0c16] text-white text-[11px] font-bold flex items-center justify-center">2</span>
+                <span class="text-xs font-bold text-slate-800">Mayo - Agosto (C2)</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800">88.9% En Rango</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Programado</label>
+                <input type="number" id="c2-prog" value="450" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Real Obtenido</label>
+                <input type="number" id="c2-real" value="400" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Cuatrimestre 3 -->
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-[#7a0c16] text-white text-[11px] font-bold flex items-center justify-center">3</span>
+                <span class="text-xs font-bold text-slate-800">Septiembre - Diciembre (C3)</span>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded-full font-bold bg-rose-100 text-rose-800">0.0% Desviación</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Programado</label>
+                <input type="number" id="c3-prog" value="300" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+              <div>
+                <label class="text-[10px] text-slate-500 font-medium">Real Obtenido</label>
+                <input type="number" id="c3-real" value="0" class="w-full text-xs bg-white border border-slate-200 rounded-lg p-2 font-mono text-center outline-none" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Avance Global Calculado -->
+          <div class="p-4 rounded-xl bg-slate-100/80 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Avance Global Anual Calculado:</p>
+              <div class="flex items-center gap-3 text-xs text-slate-500 mt-1">
+                <span>Meta Anual: <strong class="text-slate-800">1,000 u</strong></span>
+                <span>Acumulado Real: <strong class="text-slate-800">650 u</strong></span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-3xl font-bold font-serif text-[#7a0c16]">65.0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 4: Justificación y Evidencias -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-rose-800"></i> 4. Justificación y Evidencias
+          </h3>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Observaciones Técnicas o Desviaciones</label>
+            <textarea id="mir-justificacion" rows="2" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30">El desfase ligero del C2 correspondió al periodo vacacional institucional de julio; el rezago de actas será mitigado en el cierre del C3.</textarea>
+          </div>
+
+          <div class="p-3 bg-slate-50 border border-dashed border-slate-300 rounded-xl flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center">
+                <i class="fa-solid fa-paperclip"></i>
+              </div>
+              <div>
+                <p class="text-xs font-semibold text-slate-800">Expediente Digital Asociado</p>
+                <p class="text-[10px] text-slate-500">4 actas firmadas en repositorio</p>
+              </div>
+            </div>
+            <button type="button" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition">
+              Adjuntar
+            </button>
+          </div>
+        </div>
+
+        <!-- Botones de Acción (Backend + Offline) -->
+        <div class="space-y-2.5 pt-2">
+          <button type="submit" id="btn-guardar" class="w-full py-3.5 bg-[#7a0c16] hover:bg-[#600911] text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Guardar y Sincronizar Registro MIR
+          </button>
+          <button type="button" id="btn-offline" class="w-full py-3 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 transition">
+            <i class="fa-solid fa-floppy-disk text-slate-500"></i> Guardar Borrador Offline (Local/IndexedDB)
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Registros en Cola y Servidor -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="font-bold text-xs text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-database text-rose-800"></i> Registros en Cola / Servidor
+          </h3>
+          <button class="text-[11px] text-rose-800 hover:underline flex items-center gap-1 font-semibold">
+            <i class="fa-solid fa-rotate"></i> Forzar Envío
+          </button>
+        </div>
+
+        <div id="lista-registros" class="divide-y divide-slate-100">
+          <!-- Item 1: Sincronizado -->
+          <div class="py-3 flex items-center justify-between text-xs">
+            <div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="font-bold text-rose-800 text-[11px]">E010 • PROPÓSITO</span>
+                <span class="text-slate-400 font-mono text-[10px]">ID: #MIR-2026-089</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700">● Sincronizado con BD</span>
+              </div>
+              <p class="font-medium text-slate-800">Tasa de Eficiencia Terminal Licenciatura</p>
+              <p class="text-[11px] text-slate-400">Meta: 1,000 | Real: 650 (65.0%)</p>
+            </div>
+            <span class="text-[10px] text-slate-400 font-mono">Hoy 11:42 hrs • REST OK</span>
+          </div>
+
+          <!-- Item 2: Pendiente Offline -->
+          <div class="py-3 flex items-center justify-between text-xs">
+            <div>
+              <div class="flex items-center gap-2 mb-0.5">
+                <span class="font-bold text-rose-800 text-[11px]">E021 • COMPONENTE</span>
+                <span class="text-slate-400 font-mono text-[10px]">ID: #MIR-LOC-992</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700">● Pendiente en Cola</span>
+              </div>
+              <p class="font-medium text-slate-800">Artículos indexados en Scopus y WoS</p>
+              <p class="text-[11px] text-slate-400">Meta: 140 | Real: 95 (67.8%)</p>
+            </div>
+            <button class="px-3 py-1 bg-[#7a0c16] hover:bg-[#600911] text-white text-[11px] font-semibold rounded-lg flex items-center gap-1 transition">
+              <i class="fa-solid fa-upload"></i> Subir
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       BOTTOM TAB BAR (Exclusivo Móvil, lg:hidden)
+       ======================================================== -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-3 py-2 flex items-center justify-around z-40 shadow-lg">
+    <a href="index.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-house text-lg"></i>
+      <span class="text-[10px] mt-0.5">Inicio</span>
+    </a>
+    <a href="captura.html" class="flex flex-col items-center text-xs font-semibold text-rose-800">
+      <i class="fa-solid fa-pen-to-square text-lg"></i>
+      <span class="text-[10px] mt-0.5">Captura</span>
+    </a>
+    <a href="evidencias.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-folder-open text-lg"></i>
+      <span class="text-[10px] mt-0.5">Evidencias</span>
+    </a>
+    <a href="graficas.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-chart-simple text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gráficas</span>
+    </a>
+    <a href="gestion.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-shield-halved text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gestión</span>
+    </a>
+  </nav>
+
+  <!-- Script global de la PWA -->
+  <script src="../app.js"></script>
+
+</body>
+</html>

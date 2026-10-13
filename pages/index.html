@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SIDII - Inicio Institucional</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <!-- PWA Manifest & Colores -->
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#7a0c16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Estilos y Librerías -->
+   
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-[#f8f9fa] text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row">
+
+  <!-- ========================================================
+       SIDEBAR ESCRITORIO (Visible en lg: >= 1024px)
+       ======================================================== -->
+  <aside class="hidden lg:flex lg:w-64 bg-[#7a0c16] text-white flex-col justify-between shrink-0 h-screen sticky top-0 p-5 shadow-xl">
+    <div>
+      <div class="flex items-center gap-3 pb-6 border-b border-white/15">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg font-bold">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-wide">SIDII PWA</h1>
+          <p class="text-xs text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+
+      <nav class="mt-6 flex flex-col gap-1.5">
+        <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/20 text-white font-medium shadow-sm transition">
+          <i class="fa-solid fa-house"></i> <span>Inicio</span>
+        </a>
+        <a href="captura.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-pen-to-square"></i> <span>Captura MIR</span>
+        </a>
+        <a href="evidencias.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-folder-open"></i> <span>Evidencias</span>
+        </a>
+        <a href="graficas.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-chart-simple"></i> <span>Gráficas</span>
+        </a>
+        <a href="gestion.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-shield-halved"></i> <span>Gestión</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="pt-4 border-t border-white/15 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm">LR</div>
+      <div class="overflow-hidden">
+        <p class="text-sm font-semibold truncate">Liliana R.</p>
+        <p class="text-xs text-rose-200 truncate">Planeación Institucional</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================================
+       CONTENIDO PRINCIPAL
+       ======================================================== -->
+  <main class="flex-1 flex flex-col min-w-0 pb-24 lg:pb-10">
+
+    <!-- Topbar Móvil -->
+    <header class="lg:hidden bg-[#7a0c16] text-white px-5 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-sm tracking-wider">SIDII</span>
+            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 font-semibold px-1.5 py-0.5 rounded-full">● PWA</span>
+          </div>
+          <p class="text-[9px] text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2.5">
+        <button id="btn-pwa-install" class="hidden px-2 py-1 bg-white/20 text-[10px] rounded-lg text-white font-medium">
+          <i class="fa-solid fa-download mr-1"></i> Instalar
+        </button>
+        <div class="w-7 h-7 rounded-full bg-white text-[#7a0c16] font-bold text-xs flex items-center justify-center shadow">
+          LR
+        </div>
+      </div>
+    </header>
+
+    <div class="px-4 lg:px-8 py-5 max-w-5xl mx-auto w-full space-y-6">
+
+      <!-- Estado de Red y Sincronización -->
+      <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm text-xs">
+        <div class="network-status-badge flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="text-xs font-semibold text-emerald-800">Conectado a Base de Datos (REST API)</span>
+        </div>
+        <span class="text-slate-400 text-[11px] font-mono">Ejercicio 2026</span>
+      </div>
+
+      <!-- Banner de Bienvenida -->
+      <div class="bg-gradient-to-r from-[#7a0c16] to-[#50060e] text-white p-6 rounded-2xl shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <span class="text-[11px] font-semibold text-rose-200 uppercase tracking-wider">Tablero General</span>
+          <h2 class="text-2xl font-bold font-serif mt-1">Buen día, Liliana</h2>
+          <p class="text-xs text-rose-100 mt-1 max-w-md">Tu gestión al día. Periodo cuatrimestral actual: Septiembre – Diciembre 2026.</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur-sm border border-white/15 px-5 py-3 rounded-xl flex items-center gap-4 shrink-0">
+          <div>
+            <p class="text-[11px] text-rose-200">Avance General</p>
+            <p class="text-2xl font-bold">78%</p>
+          </div>
+          <div class="text-right border-l border-white/20 pl-4">
+            <p class="text-[11px] text-rose-200">Actividades</p>
+            <p class="text-xs font-semibold">12 de 16 completadas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección de Widgets Interactivos -->
+      <section>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-shapes text-rose-800"></i> Widgets de Gestión
+          </h3>
+          <span class="text-[11px] text-slate-400">Actualizado hoy</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Widget 1: Cumplimiento MIR -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span>Metas MIR</span>
+              <i class="fa-solid fa-chart-pie text-rose-800"></i>
+            </div>
+            <div class="text-xl font-bold text-slate-800">76%</div>
+            <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+              <div class="bg-[#7a0c16] h-full rounded-full" style="width: 76%"></div>
+            </div>
+            <p class="text-[10px] text-slate-400 mt-2">Fin y Propósito en rango</p>
+          </div>
+
+          <!-- Widget 2: Alertas de Entrega -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span>Cierre Cuatrimestre</span>
+              <i class="fa-solid fa-clock text-amber-600"></i>
+            </div>
+            <div class="text-xl font-bold text-slate-800">06 <span class="text-xs font-normal text-slate-500">días</span></div>
+            <span class="inline-block mt-2 text-[10px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded font-medium">Urgente: Entrega C3</span>
+          </div>
+
+          <!-- Widget 3: Cola de Sincronización -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span>Cola Offline</span>
+              <i class="fa-solid fa-database text-blue-600"></i>
+            </div>
+            <div class="text-xl font-bold text-slate-800">1 <span class="text-xs font-normal text-slate-500">pendiente</span></div>
+            <p class="text-[10px] text-blue-600 mt-2 font-medium">Auto-sincronización activa</p>
+          </div>
+
+          <!-- Widget 4: Validación Institucional -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+              <span>e.Firma & Validación</span>
+              <i class="fa-solid fa-circle-check text-emerald-600"></i>
+            </div>
+            <div class="text-xl font-bold text-slate-800">98.4%</div>
+            <p class="text-[10px] text-emerald-700 mt-2 font-medium">Actas revisadas sin observaciones</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid de 2 Columnas: Video Institucional y Acciones Rápidas -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Columna Izquierda: Video del Rector -->
+        <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-[10px] font-bold text-rose-800 uppercase tracking-wide">COMUNICADO OFICIAL</span>
+              <h4 class="font-bold text-sm text-slate-900">Mensaje del Rector y Presentación de Indicadores</h4>
+            </div>
+            <span class="text-[11px] text-slate-400"><i class="fa-regular fa-clock mr-1"></i>12 min</span>
+          </div>
+
+          <!-- Contenedor de Video -->
+          <div class="relative w-full aspect-video bg-slate-900 rounded-xl overflow-hidden flex items-center justify-center shadow-inner group">
+            <img src="https://images.unsplash.com/photo-1544531586-fde5298cdd40?auto=format&fit=crop&w=1000&q=80" alt="Conferencia Institucional" class="absolute inset-0 w-full h-full object-cover opacity-60" />
+            <button class="relative z-10 w-14 h-14 rounded-full bg-[#7a0c16]/90 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition">
+              <i class="fa-solid fa-play ml-1"></i>
+            </button>
+            <div class="absolute bottom-3 left-3 right-3 text-white text-xs z-10 flex justify-between bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-lg">
+              <span>Sesión Solemne de Planeación Colegiada</span>
+              <span class="font-mono text-[11px]">HD • 1080p</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Lineamientos directivos para la carga oportuna de metas del ejercicio fiscal y apego normativo a la memoria de cuenta pública.
+          </p>
+        </div>
+
+        <!-- Columna Derecha: Acciones Rápidas PWA -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <h4 class="font-bold text-sm text-slate-900 flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-rose-800"></i> Acciones Directas
+          </h4>
+
+          <div class="space-y-2.5">
+            <a href="captura.html" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-rose-50/60 border border-slate-200/80 transition">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-rose-100 text-rose-800 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-slate-800">Capturar MIR</p>
+                  <p class="text-[10px] text-slate-400">Cargar metas y valores reales</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+
+            <a href="evidencias.html" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-rose-50/60 border border-slate-200/80 transition">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-folder-open"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-slate-800">Subir Evidencias</p>
+                  <p class="text-[10px] text-slate-400">Adjuntar actas y fotografías</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+
+            <a href="graficas.html" class="flex items-center justify-between p-3 rounded-xl bg-slate-50 hover:bg-rose-50/60 border border-slate-200/80 transition">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-sm">
+                  <i class="fa-solid fa-chart-simple"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-slate-800">Ver Analíticas</p>
+                  <p class="text-[10px] text-slate-400">Semáforos y cumplimiento</p>
+                </div>
+              </div>
+              <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================
+       BOTTOM TAB BAR (Exclusivo Móvil, lg:hidden)
+       ======================================================== -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-3 py-2 flex items-center justify-around z-40 shadow-lg">
+    <a href="index.html" class="flex flex-col items-center text-xs font-semibold text-rose-800">
+      <i class="fa-solid fa-house text-lg"></i>
+      <span class="text-[10px] mt-0.5">Inicio</span>
+    </a>
+    <a href="captura.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-pen-to-square text-lg"></i>
+      <span class="text-[10px] mt-0.5">Captura</span>
+    </a>
+    <a href="evidencias.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-folder-open text-lg"></i>
+      <span class="text-[10px] mt-0.5">Evidencias</span>
+    </a>
+    <a href="graficas.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-chart-simple text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gráficas</span>
+    </a>
+    <a href="gestion.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-shield-halved text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gestión</span>
+    </a>
+  </nav>
+
+  <!-- Script global PWA -->
+  <script src="../app.js"></script>
+
+</body>
+</html>

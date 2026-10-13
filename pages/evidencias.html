@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SIDII - Carga de Evidencias</title>
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="../manifest.json" />
+  <meta name="theme-color" content="#7a0c16" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-[#f8f9fa] text-slate-800 font-sans antialiased min-h-screen flex flex-col lg:flex-row">
+
+  <!-- SIDEBAR ESCRITORIO -->
+  <aside class="hidden lg:flex lg:w-64 bg-[#7a0c16] text-white flex-col justify-between shrink-0 h-screen sticky top-0 p-5 shadow-xl">
+    <div>
+      <div class="flex items-center gap-3 pb-6 border-b border-white/15">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white text-lg font-bold">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-wide">SIDII PWA</h1>
+          <p class="text-xs text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+
+      <nav class="mt-6 flex flex-col gap-1.5">
+        <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-house"></i> <span>Inicio</span>
+        </a>
+        <a href="captura.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-pen-to-square"></i> <span>Captura MIR</span>
+        </a>
+        <a href="evidencias.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/20 text-white font-medium shadow-sm transition">
+          <i class="fa-solid fa-folder-open"></i> <span>Evidencias</span>
+        </a>
+        <a href="graficas.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-chart-simple"></i> <span>Gráficas</span>
+        </a>
+        <a href="gestion.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/10 text-rose-100 transition">
+          <i class="fa-solid fa-shield-halved"></i> <span>Gestión</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="pt-4 border-t border-white/15 flex items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center font-bold text-sm">LR</div>
+      <div class="overflow-hidden">
+        <p class="text-sm font-semibold truncate">Liliana R.</p>
+        <p class="text-xs text-rose-200 truncate">Planeación Institucional</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="flex-1 flex flex-col min-w-0 pb-24 lg:pb-10">
+
+    <!-- Topbar Móvil -->
+    <header class="lg:hidden bg-[#7a0c16] text-white px-5 py-3.5 flex items-center justify-between sticky top-0 z-30 shadow-md">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center text-sm">
+          <i class="fa-solid fa-landmark"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-sm tracking-wider">SIDII</span>
+            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 font-semibold px-1.5 py-0.5 rounded-full">● PWA</span>
+          </div>
+          <p class="text-[9px] text-rose-200">GESTIÓN INSTITUCIONAL</p>
+        </div>
+      </div>
+      <div class="w-7 h-7 rounded-full bg-white text-[#7a0c16] font-bold text-xs flex items-center justify-center shadow">
+        LR
+      </div>
+    </header>
+
+    <div class="px-4 lg:px-8 py-5 max-w-4xl mx-auto w-full space-y-5">
+      <!-- Encabezado -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm flex items-start justify-between">
+        <div>
+          <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wider">DOCUMENTACIÓN NORMATIVA</span>
+          <h2 class="text-xl sm:text-2xl font-bold font-serif text-slate-900 mt-1">Carga de Evidencia Institucional</h2>
+          <p class="text-xs text-slate-500 mt-1">
+            Respaldo documental para auditorías, metas cuatrimestrales y expediente digital de cuenta pública.
+          </p>
+        </div>
+        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-800 flex items-center justify-center shrink-0 ml-3">
+          <i class="fa-solid fa-file-arrow-up text-base"></i>
+        </div>
+      </div>
+
+      <!-- Formulario de Subida -->
+      <form id="form-evidencias" class="space-y-4" onsubmit="event.preventDefault();">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Clave del PP</label>
+              <input type="text" value="E010" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30 font-mono" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Nombre del PP</label>
+              <input type="text" value="Prestación de Servicios de Educación Superior" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Unidad Responsable</label>
+            <input type="text" value="UR-320 Secretaría General Académica" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Título de la Actividad o Evidencia</label>
+            <input type="text" placeholder="Ej. Acta de titulación y examen profesional cohorte 2026" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30" />
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Justificación del Registro</label>
+            <textarea rows="2" placeholder="Describa el respaldo que sustenta el indicador..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2.5 outline-none focus:ring-2 focus:ring-[#7a0c16]/30"></textarea>
+          </div>
+
+          <!-- Zona de Carga con Cámara PWA -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 mb-1">Archivos y Evidencia Fotográfica</label>
+            <div class="border-2 border-dashed border-slate-300 hover:border-[#7a0c16] rounded-2xl p-6 text-center bg-slate-50/50 transition cursor-pointer">
+              <input type="file" id="file-input" class="hidden" multiple accept="image/*,.pdf,.doc,.docx" />
+              <div class="flex flex-col items-center gap-2">
+                <div class="w-12 h-12 rounded-full bg-rose-50 text-rose-800 flex items-center justify-center text-xl">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <p class="text-xs font-semibold text-slate-800">Haz clic para adjuntar o arrastra tus archivos aquí</p>
+                <p class="text-[11px] text-slate-400">PDF, JPG o PNG (Máx. 25MB por archivo)</p>
+                <div class="flex gap-2 mt-2">
+                  <button type="button" onclick="document.getElementById('file-input').click()" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 shadow-sm flex items-center gap-1.5">
+                    <i class="fa-solid fa-folder-open text-rose-800"></i> Examinar
+                  </button>
+                  <label for="camera-input" class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 shadow-sm flex items-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-camera text-rose-800"></i> Tomar Foto PWA
+                  </label>
+                  <input type="file" id="camera-input" accept="image/*" capture="environment" class="hidden" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de Envío -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <button type="submit" class="flex-1 py-3 bg-[#7a0c16] hover:bg-[#600911] text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md transition">
+            <i class="fa-solid fa-check"></i> Registrar y Subir Evidencia
+          </button>
+          <button type="button" class="py-3 px-5 bg-white border border-slate-300 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl hover:bg-slate-50 transition">
+            Guardar en Borradores
+          </button>
+        </div>
+      </form>
+
+      <!-- Lista de Evidencias Cargadas -->
+      <div class="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-3">
+        <h3 class="font-bold text-xs text-slate-800 flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-rose-800"></i> Documentos Registrados Recientemente
+        </h3>
+
+        <div class="divide-y divide-slate-100 text-xs">
+          <div class="py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-800 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-file-pdf"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-slate-800">Acta_Titulacion_C1_2026.pdf</p>
+                <p class="text-[10px] text-slate-400">E010 • UR-320 • 2.4 MB</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700">● Validado</span>
+          </div>
+
+          <div class="py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center text-sm">
+                <i class="fa-solid fa-image"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-slate-800">Foto_Sesion_Colegiada_Julio.jpg</p>
+                <p class="text-[10px] text-slate-400">K027 • Pendiente de revisión técnica</p>
+              </div>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700">● En Revisión</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOTTOM TAB BAR MÓVIL -->
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-3 py-2 flex items-center justify-around z-40 shadow-lg">
+    <a href="index.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-house text-lg"></i>
+      <span class="text-[10px] mt-0.5">Inicio</span>
+    </a>
+    <a href="captura.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-pen-to-square text-lg"></i>
+      <span class="text-[10px] mt-0.5">Captura</span>
+    </a>
+    <a href="evidencias.html" class="flex flex-col items-center text-xs font-semibold text-rose-800">
+      <i class="fa-solid fa-folder-open text-lg"></i>
+      <span class="text-[10px] mt-0.5">Evidencias</span>
+    </a>
+    <a href="graficas.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-chart-simple text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gráficas</span>
+    </a>
+    <a href="gestion.html" class="flex flex-col items-center text-xs text-slate-400 hover:text-slate-600">
+      <i class="fa-solid fa-shield-halved text-lg"></i>
+      <span class="text-[10px] mt-0.5">Gestión</span>
+    </a>
+  </nav>
+
+  <script src="../app.js"></script>
+</body>
+</html>

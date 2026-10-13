@@ -1,0 +1,35 @@
+{
+  "name": "SIDII - Gestión Institucional",
+  "short_name": "SIDII",
+  "description": "Sistema Integral de Información Institucional PWA",
+  "start_url": "./pages/index.html",
+"scope": "./",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#7a0c16",
+  "lang": "es-MX",
+  "icons": [
+  {
+    "src": "./assets/icons/icon.png",
+    "sizes": "192x192",
+    "type": "image/png",
+    "purpose": "any"
+  }
+],
+  "shortcuts": [
+    {
+      "name": "Captura MIR",
+      "short_name": "Captura",
+      "description": "Registrar metas cuatrimestrales MIR",
+      "url": "./pages/captura.html",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Evidencias",
+      "short_name": "Evidencias",
+      "description": "Cargar actas y documentos",
+      "url": "./pages/evidencias.html",
+      "icons": [{ "src": "/assets/icons/icon-192x192.png", "sizes": "192x192" }]
+    }
+  ]
+}
