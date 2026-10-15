@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SIDII  Captura MIR & Gestión Institucional</title>
+  <title>SIDII - Captura MIR & Gestión Institucional</title>
   <meta name="mobile-web-app-capable" content="yes" />
   <!-- Metadatos y PWA -->
   <link rel="manifest" href="../manifest.json" />
@@ -95,19 +95,22 @@
       </div>
     </header>
 
-    <!-- Barra de Estado de Conexión a Base de Datos / Backend -->
+    <!-- Barra de Estado de Conexión a Base de Datos / Backend
+         (app.js muestra la variante "online" u "offline") -->
     <div class="px-4 lg:px-8 pt-3">
       <div class="flex items-center justify-between px-3.5 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-xs">
         <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" data-grupo="red" data-variante="online"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500" data-grupo="red" data-variante="offline" hidden></span>
           <div>
-            <span class="font-semibold text-slate-800">Conectado a Base de Datos (REST API)</span>
-            <span class="hidden sm:inline text-slate-400 ml-1.5">• PostgreSQL v16 • Sincronización activa</span>
+            <span class="font-semibold text-slate-800" data-grupo="red" data-variante="online">Conectado a Base de Datos (REST API)</span>
+            <span class="font-semibold text-slate-800" data-grupo="red" data-variante="offline" hidden>Sin conexión • Trabajando en modo offline</span>
+            <span data-grupo="red" data-variante="online"><span class="hidden sm:inline text-slate-400 ml-1.5">• MongoDB Atlas • Sincronización activa</span></span>
           </div>
         </div>
         <div class="flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 text-amber-800 border border-amber-200 rounded-lg font-medium text-[11px]" id="cola-badge">
           <i class="fa-solid fa-box-archive text-amber-600"></i>
-          <span>1 en cola</span>
+          <span><span data-cola-cantidad>0</span> en cola</span>
         </div>
       </div>
     </div>
@@ -130,7 +133,7 @@
       </div>
 
       <!-- FORMULARIO PRINCIPAL -->
-      <form id="form-mir" class="space-y-5" onsubmit="event.preventDefault();">
+      <form id="form-mir" class="space-y-5">
         
 
         <!-- Sección 1: Jerarquía y Unidad Responsable -->
@@ -305,13 +308,20 @@
           </div>
         </div>
 
-        <!-- Botones de Acción (Backend + Offline) -->
+        <!-- Botones de Acción (Backend + Offline)
+             El texto del botón principal cambia según el estado (captura.js muestra una variante) -->
         <div class="space-y-2.5 pt-2">
-          <button type="submit" id="btn-guardar" class="w-full py-3.5 bg-[#7a0c16] hover:bg-[#600911] text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Guardar y Sincronizar Registro MIR
+          <button type="submit" id="btn-guardar" class="w-full py-3.5 bg-[#7a0c16] hover:bg-[#600911] disabled:opacity-70 text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition">
+            <span data-grupo="btn-guardar" data-variante="guardar"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar y Sincronizar Registro MIR</span>
+            <span data-grupo="btn-guardar" data-variante="actualizar" hidden><i class="fa-solid fa-pen mr-2"></i>Actualizar Registro MIR</span>
+            <span data-grupo="btn-guardar" data-variante="guardando" hidden><i class="fa-solid fa-spinner fa-spin mr-2"></i>Guardando en MongoDB Atlas...</span>
+            <span data-grupo="btn-guardar" data-variante="actualizando" hidden><i class="fa-solid fa-spinner fa-spin mr-2"></i>Actualizando...</span>
           </button>
           <button type="button" id="btn-offline" class="w-full py-3 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs sm:text-sm font-semibold rounded-xl flex items-center justify-center gap-2 transition">
             <i class="fa-solid fa-floppy-disk text-slate-500"></i> Guardar Borrador Offline (Local/IndexedDB)
+          </button>
+          <button type="button" id="btn-cancelar-edicion" hidden class="w-full py-3 bg-white hover:bg-slate-100 text-rose-800 border border-rose-200 text-xs sm:text-sm font-semibold rounded-xl transition">
+            Cancelar edición
           </button>
         </div>
 
@@ -323,40 +333,28 @@
           <h3 class="font-bold text-xs text-slate-800 flex items-center gap-2">
             <i class="fa-solid fa-database text-rose-800"></i> Registros en Cola / Servidor
           </h3>
-          <button class="text-[11px] text-rose-800 hover:underline flex items-center gap-1 font-semibold">
+          <button type="button" id="btn-forzar-envio" class="text-[11px] text-rose-800 hover:underline flex items-center gap-1 font-semibold">
             <i class="fa-solid fa-rotate"></i> Forzar Envío
           </button>
         </div>
 
-        <div id="lista-registros" class="divide-y divide-slate-100">
-          <!-- Item 1: Sincronizado -->
-          <div class="py-3 flex items-center justify-between text-xs">
-            <div>
-              <div class="flex items-center gap-2 mb-0.5">
-                <span class="font-bold text-rose-800 text-[11px]">E010 • PROPÓSITO</span>
-                <span class="text-slate-400 font-mono text-[10px]">ID: #MIR-2026-089</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700">● Sincronizado con BD</span>
-              </div>
-              <p class="font-medium text-slate-800">Tasa de Eficiencia Terminal Licenciatura</p>
-              <p class="text-[11px] text-slate-400">Meta: 1,000 | Real: 650 (65.0%)</p>
-            </div>
-            <span class="text-[10px] text-slate-400 font-mono">Hoy 11:42 hrs • REST OK</span>
+        <!-- Las tarjetas se crean desde js/captura.js usando <template id="tpl-registro"> (al final de esta página) -->
+        <div class="space-y-3">
+          <div id="aviso-sin-conexion" hidden class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-center text-[11px] text-amber-800">
+            <i class="fa-solid fa-wifi mr-1"></i> Sin conexión: se muestra la última copia guardada en este dispositivo.
           </div>
 
-          <!-- Item 2: Pendiente Offline -->
-          <div class="py-3 flex items-center justify-between text-xs">
-            <div>
-              <div class="flex items-center gap-2 mb-0.5">
-                <span class="font-bold text-rose-800 text-[11px]">E021 • COMPONENTE</span>
-                <span class="text-slate-400 font-mono text-[10px]">ID: #MIR-LOC-992</span>
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700">● Pendiente en Cola</span>
-              </div>
-              <p class="font-medium text-slate-800">Artículos indexados en Scopus y WoS</p>
-              <p class="text-[11px] text-slate-400">Meta: 140 | Real: 95 (67.8%)</p>
-            </div>
-            <button class="px-3 py-1 bg-[#7a0c16] hover:bg-[#600911] text-white text-[11px] font-semibold rounded-lg flex items-center gap-1 transition">
-              <i class="fa-solid fa-upload"></i> Subir
-            </button>
+          <div id="lista-registros" class="space-y-3"></div>
+
+          <div id="lista-error" hidden class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-xs text-red-700">
+            <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+            No se pudieron cargar los registros del servidor. Si no hay internet, se mostrarán cuando vuelva la conexión; si la API estaba dormida, espera un minuto y recarga.
+          </div>
+
+          <div id="lista-vacia" hidden class="p-6 text-center border-2 border-dashed border-gray-200 rounded-2xl bg-white text-gray-400">
+            <i class="fa-regular fa-folder-open text-2xl mb-2 text-gray-300 block"></i>
+            <p class="text-xs font-semibold text-gray-600">No hay registros almacenados todavía</p>
+            <p class="text-[11px] text-gray-400 mt-0.5">Completa el formulario arriba y presiona "Guardar Registro MIR".</p>
           </div>
         </div>
       </div>
@@ -390,8 +388,53 @@
     </a>
   </nav>
 
-  <!-- Script global de la PWA -->
+  <!-- Aviso emergente (captura.js solo le cambia el texto y lo muestra) -->
+  <div id="aviso" hidden class="fixed bottom-24 lg:bottom-6 left-1/2 -translate-x-1/2 z-50 max-w-[90vw] bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl shadow-lg text-center"></div>
+
+  <!-- Plantilla de tarjeta de registro: aquí se cambia el diseño; captura.js solo rellena los textos -->
+  <template id="tpl-registro">
+    <div class="bg-white border border-gray-200/90 rounded-xl p-4 shadow-sm hover:border-gray-300 transition">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-red-50 text-[#7a0c16] border border-red-100" data-campo="etiqueta"></span>
+        <span class="text-[11px] text-gray-400 font-medium">
+          <i class="fa-regular fa-calendar text-[10px] mr-1"></i><span data-campo="fecha"></span>
+        </span>
+      </div>
+      <h4 class="text-sm font-bold text-gray-900 leading-snug" data-campo="indicador"></h4>
+      <p class="text-xs text-gray-500 mt-1 line-clamp-2" data-campo="resumen"></p>
+      <div class="mt-3 pt-2.5 border-t border-gray-100 flex items-center justify-between gap-2 text-[11px] text-gray-600">
+        <div class="flex flex-col gap-0.5">
+          <span>Metas Totales: <strong class="text-gray-900" data-campo="metas"></strong></span>
+          <span data-solo="servidor">
+            <span class="text-emerald-600 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-circle-check text-[10px]"></i> Sincronizado
+            </span>
+          </span>
+          <span data-solo="cola" hidden>
+            <span class="text-amber-600 font-semibold flex items-center gap-1">
+              <i class="fa-solid fa-clock text-[10px]"></i> Pendiente en Cola
+            </span>
+          </span>
+        </div>
+        <div class="flex flex-wrap justify-end gap-1.5 shrink-0">
+          <button type="button" data-accion="subir" data-solo="cola" hidden class="px-2.5 py-1 bg-[#7a0c16] hover:bg-[#600911] text-white text-[11px] font-semibold rounded-lg transition">
+            <i class="fa-solid fa-upload"></i> Subir
+          </button>
+          <button type="button" data-accion="editar" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-semibold rounded-lg transition">
+            <i class="fa-solid fa-pen"></i> Editar
+          </button>
+          <button type="button" data-accion="borrar" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-800 text-[11px] font-semibold rounded-lg transition">
+            <i class="fa-solid fa-trash"></i> Borrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Scripts: global, base local offline y lógica de esta pantalla (en ese orden) -->
   <script src="../app.js"></script>
+  <script src="../js/db.js"></script>
+  <script src="../js/captura.js"></script>
 
 </body>
 </html>

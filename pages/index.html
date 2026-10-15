@@ -10,7 +10,7 @@
   <meta name="theme-color" content="#7a0c16" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="icon" href="../assets/icons/icon.png" />
+
   <!-- Estilos y Librerías -->
    
   <script src="https://cdn.tailwindcss.com"></script>
@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="flex items-center gap-2.5">
-        <button id="btn-pwa-install" class="hidden px-2 py-1 bg-white/20 text-[10px] rounded-lg text-white font-medium">
+        <button id="btn-pwa-install" hidden class="px-2 py-1 bg-white/20 text-[10px] rounded-lg text-white font-medium">
           <i class="fa-solid fa-download mr-1"></i> Instalar
         </button>
         <div class="w-7 h-7 rounded-full bg-white text-[#7a0c16] font-bold text-xs flex items-center justify-center shadow">
@@ -93,11 +93,14 @@
 
     <div class="px-4 lg:px-8 py-5 max-w-5xl mx-auto w-full space-y-6">
 
-      <!-- Estado de Red y Sincronización -->
+      <!-- Estado de Red y Sincronización
+           (app.js muestra la variante "online" u "offline") -->
       <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm text-xs">
         <div class="network-status-badge flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="text-xs font-semibold text-emerald-800">Conectado a Base de Datos (REST API)</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" data-grupo="red" data-variante="online"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500" data-grupo="red" data-variante="offline" hidden></span>
+          <span class="text-xs font-semibold text-emerald-800" data-grupo="red" data-variante="online">Conectado a Base de Datos (REST API)</span>
+          <span class="text-xs font-semibold text-amber-800" data-grupo="red" data-variante="offline" hidden>Sin conexión • Trabajando en modo offline</span>
         </div>
         <span class="text-slate-400 text-[11px] font-mono">Ejercicio 2026</span>
       </div>
@@ -121,7 +124,9 @@
         </div>
       </div>
 
-      <!-- Sección de Widgets Interactivos -->
+      <!-- Sección de Widgets Interactivos
+           Cada estado de un widget (colores y textos) está escrito aquí;
+           js/inicio.js solo decide cuál variante se muestra. -->
       <section>
         <div class="flex items-center justify-between mb-3">
           <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
@@ -137,31 +142,45 @@
               <span>Metas MIR</span>
               <i class="fa-solid fa-chart-pie text-rose-800"></i>
             </div>
-            <div class="text-xl font-bold text-slate-800">76%</div>
+            <div id="widget-mir-valor" class="text-xl font-bold text-slate-800">76%</div>
             <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
-              <div class="bg-[#7a0c16] h-full rounded-full" style="width: 76%"></div>
+              <div id="widget-mir-barra" class="bg-[#7a0c16] h-full rounded-full" style="width: 76%"></div>
             </div>
             <p class="text-[10px] text-slate-400 mt-2">Fin y Propósito en rango</p>
           </div>
 
-          <!-- Widget 2: Alertas de Entrega -->
+          <!-- Widget 2: Alertas de Entrega (variantes: urgente / entiempo / cerrado) -->
           <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
               <span>Cierre Cuatrimestre</span>
               <i class="fa-solid fa-clock text-amber-600"></i>
             </div>
-            <div class="text-xl font-bold text-slate-800">06 <span class="text-xs font-normal text-slate-500">días</span></div>
-            <span class="inline-block mt-2 text-[10px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded font-medium">Urgente: Entrega C3</span>
+            <div class="text-xl font-bold text-slate-800"><span id="widget-dias-valor">06</span> <span class="text-xs font-normal text-slate-500">días</span></div>
+            <div data-grupo="cierre" data-variante="urgente">
+              <span class="inline-block mt-2 text-[10px] bg-amber-50 text-amber-800 px-2 py-0.5 rounded font-medium">Urgente: Entrega C3</span>
+            </div>
+            <div data-grupo="cierre" data-variante="entiempo" hidden>
+              <span class="inline-block mt-2 text-[10px] bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded font-medium">En tiempo: Entrega C3</span>
+            </div>
+            <div data-grupo="cierre" data-variante="cerrado" hidden>
+              <span class="inline-block mt-2 text-[10px] bg-rose-50 text-rose-800 px-2 py-0.5 rounded font-medium">Cuatrimestre cerrado</span>
+            </div>
           </div>
 
-          <!-- Widget 3: Cola de Sincronización -->
+          <!-- Widget 3: Cola de Sincronización (variantes: online-vacia / online-pendientes / offline) -->
           <div class="bg-white p-4 rounded-xl border border-slate-200/90 shadow-sm">
             <div class="flex items-center justify-between text-xs text-slate-500 mb-2">
               <span>Cola Offline</span>
               <i class="fa-solid fa-database text-blue-600"></i>
             </div>
-            <div class="text-xl font-bold text-slate-800">1 <span class="text-xs font-normal text-slate-500">pendiente</span></div>
-            <p class="text-[10px] text-blue-600 mt-2 font-medium">Auto-sincronización activa</p>
+            <div class="text-xl font-bold text-slate-800">
+              <span id="widget-cola-valor">1</span>
+              <span class="text-xs font-normal text-slate-500" data-grupo="cola-unidad" data-variante="uno">pendiente</span>
+              <span class="text-xs font-normal text-slate-500" data-grupo="cola-unidad" data-variante="otros" hidden>pendientes</span>
+            </div>
+            <p class="text-[10px] text-blue-600 mt-2 font-medium" data-grupo="cola" data-variante="online-vacia">Auto-sincronización activa</p>
+            <p class="text-[10px] text-blue-600 mt-2 font-medium" data-grupo="cola" data-variante="online-pendientes" hidden>Se enviarán automáticamente</p>
+            <p class="text-[10px] text-amber-600 mt-2 font-medium" data-grupo="cola" data-variante="offline" hidden>Sin conexión: se guardan en este dispositivo</p>
           </div>
 
           <!-- Widget 4: Validación Institucional -->
@@ -285,8 +304,10 @@
     </a>
   </nav>
 
-  <!-- Script global PWA -->
+  <!-- Scripts: global, base local offline y lógica de esta pantalla (en ese orden) -->
   <script src="../app.js"></script>
+  <script src="../js/db.js"></script>
+  <script src="../js/inicio.js"></script>
 
 </body>
 </html>
