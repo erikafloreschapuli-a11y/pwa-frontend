@@ -1,10 +1,11 @@
 /**
  * SIDII PWA - Archivo de lógica de interfaz y conexión con backend
- * Endpoints: MongoDB Atlas vía Express en http://localhost:4000
+ * Endpoints: API Express desplegada en Render y conectada a MongoDB Atlas
  */
 
-// URL del backend local conectado a MongoDB Atlas
+// URL del backend desplegado conectado a MongoDB Atlas
 const API_URL = 'https://pwa-api-3g8d.onrender.com/api/indicadores';
+const API_HEALTH_URL = API_URL.replace(/\/api\/indicadores$/, '/api/health');
 
 // Inicialización cuando carga el documento
 document.addEventListener('DOMContentLoaded', () => {
@@ -99,7 +100,7 @@ function configurarFormularioMIR() {
             }
         } catch (error) {
             console.error('Error de comunicación con el backend:', error);
-            alert('⚠️ No se pudo conectar al servidor en http://localhost:4000.\nAsegúrate de tener la terminal ejecutando "npm start".');
+            alert(`⚠️ No se pudo comunicar con el backend. Comprueba su estado en: ${API_HEALTH_URL}`);
         } finally {
             // Restaurar estado del botón
             if (btnGuardar) {
@@ -175,7 +176,7 @@ async function cargarRegistros() {
         contenedor.innerHTML = `
             <div class="p-4 bg-red-50 border border-red-200 rounded-xl text-center text-xs text-red-700">
                 <i class="fa-solid fa-triangle-exclamation mr-1"></i>
-                No se pudo conectar a http://localhost:4000. Revisa que tu backend esté encendido con <code>npm start</code>.
+                No se pudo conectar con el backend. <a href="${API_HEALTH_URL}" target="_blank" rel="noopener noreferrer" class="underline">Comprueba su estado</a>.
             </div>
         `;
     }
